@@ -1,0 +1,245 @@
+-- Insertar datos en la tabla users.users
+INSERT INTO users.users (name_users, password_users) VALUES
+('Juan Perez', 'pass123'),
+('Maria Gomez', 'pass456'),
+('Carlos Ruiz', 'pass789'),
+('Ana Torres', 'pass159'),
+('Pedro Martinez', 'pass753'),
+('Sofia Fernandez', 'pass852'),
+('Luis Rojas', 'pass951'),
+('Elena Castro', 'pass357'),
+('Miguel Vargas', 'pass258'),
+('Patricia Ortega', 'pass369'),
+('Raul Mendoza', 'pass147'),
+('Camila Salas', 'pass258'),
+('Fernando Reyes', 'pass369'),
+('Isabel Duarte', 'pass741'),
+('Andres Peña', 'pass852');
+
+-- Insertar datos en la tabla users.employee
+INSERT INTO users.employee (id_users, name_employee, ap_paterno, ap_materno) VALUES
+(1, 'Juan', 'Perez', 'Gomez'),
+(2, 'Maria', 'Gomez', 'Lopez'),
+(3, 'Carlos', 'Ruiz', 'Fernandez'),
+(4, 'Ana', 'Torres', 'Diaz'),
+(5, 'Pedro', 'Martinez', 'Chavez'),
+(6, 'Sofia', 'Fernandez', 'Garcia'),
+(7, 'Luis', 'Rojas', 'Castro'),
+(8, 'Elena', 'Castro', 'Vargas'),
+(9, 'Miguel', 'Vargas', 'Ortega'),
+(10, 'Patricia', 'Ortega', 'Mendoza'),
+(11, 'Raul', 'Mendoza', 'Salas'),
+(12, 'Camila', 'Salas', 'Reyes'),
+(13, 'Fernando', 'Reyes', 'Duarte'),
+(14, 'Isabel', 'Duarte', 'Peña'),
+(15, 'Andres', 'Peña', 'Perez');
+
+INSERT INTO users.position (name_position, description_position) VALUES
+('Gerente', 'Responsable de la gestión de la empresa'),
+('Vendedor', 'Encargado de la venta de productos y atención al cliente'),
+('Cajero', 'Responsable de recibir pagos y realizar cobros'),
+('Administrador', 'Encargado de gestionar la administración interna de la tienda'),
+('Supervisor', 'Coordina las actividades de los empleados y supervisa su desempeño');
+);
+
+-- Insertar datos en la tabla users.contract (relación entre empleados y posiciones)
+INSERT INTO users.contract (id_employee, id_position, date_contract, type_contract, time_contract)
+VALUES
+(1, 1, '2025-01-01', 'Tiempo completo', 12),   -- Juan Perez, Gerente
+(2, 2, '2025-02-01', 'Medio tiempo', 6),      -- Maria Gomez, Vendedor
+(3, 3, '2025-03-01', 'Tiempo completo', 24),   -- Carlos Ruiz, Cajero
+(4, 4, '2025-04-01', 'Medio tiempo', 12),      -- Ana Torres, Administrador
+(5, 5, '2025-05-01', 'Tiempo completo', 36),   -- Pedro Martinez, Supervisor
+(6, 2, '2025-06-01', 'Tiempo completo', 12),   -- Sofia Fernandez, Vendedor
+(7, 3, '2025-07-01', 'Medio tiempo', 6),      -- Luis Rojas, Cajero
+(8, 4, '2025-08-01', 'Tiempo completo', 24),   -- Elena Castro, Administrador
+(9, 5, '2025-09-01', 'Medio tiempo', 12),     -- Miguel Vargas, Supervisor
+(10, 1, '2025-10-01', 'Tiempo completo', 24),  -- Patricia Ortega, Gerente
+(11, 2, '2025-11-01', 'Tiempo completo', 12),  -- Raul Mendoza, Vendedor
+(12, 3, '2025-12-01', 'Medio tiempo', 18),    -- Camila Salas, Cajero
+(13, 4, '2025-01-01', 'Tiempo completo', 36), -- Fernando Reyes, Administrador
+(14, 5, '2025-02-01', 'Medio tiempo', 12),    -- Isabel Duarte, Supervisor
+(15, 1, '2025-03-01', 'Tiempo completo', 24); -- Andres Peña, Gerente
+
+
+-- Insertar datos en la tabla store.item
+INSERT INTO store.item (name_item, description_item) VALUES
+('Laptop', 'Computadora portátil de alto rendimiento'),
+('Mouse', 'Dispositivo de entrada inalámbrico'),
+('Teclado', 'Teclado mecánico para gaming'),
+('Monitor', 'Pantalla LED de 24 pulgadas'),
+('Impresora', 'Impresora multifuncional láser'),
+('Tablet', 'Tableta con sistema Android'),
+('Celular', 'Smartphone con doble cámara'),
+('Auriculares', 'Audífonos con cancelación de ruido'),
+('Disco Duro', 'HDD de 1TB para almacenamiento'),
+('Memoria USB', 'Pendrive de 64GB'),
+('Silla Gamer', 'Silla ergonómica para escritorio'),
+('Escritorio', 'Mesa de trabajo de madera'),
+('Cámara Web', 'Cámara Full HD para videollamadas'),
+('Router', 'Router Wi-Fi de alta velocidad'),
+('Tarjeta Gráfica', 'GPU para juegos de última generación');
+
+-- Insertar datos en la tabla store.store
+INSERT INTO store.store (id_users, id_item, motion, amount_store, final_amount) VALUES
+(1, 1, 'i', 10, 10),
+(2, 2, 'i', 15, 15),
+(3, 3, 'i', 20, 20),
+(4, 4, 'i', 25, 25),
+(5, 5, 'i', 30, 30),
+(6, 6, 'i', 10, 10),
+(7, 7, 'i', 5, 5),
+(8, 8, 'i', 8, 8),
+(9, 9, 'i', 12, 12),
+(10, 10, 'i', 14, 14),
+(11, 11, 'i', 6, 6),
+(12, 12, 'i', 9, 9),
+(13, 13, 'i', 4, 4),
+(14, 14, 'i', 7, 7),
+(15, 15, 'i', 11, 11);
+
+-- Insertar datos en la tabla sale.client
+INSERT INTO sale.client (name_client) VALUES
+('Empresa A'),
+('Empresa B'),
+('Empresa C'),
+('Empresa D'),
+('Empresa E'),
+('Empresa F'),
+('Empresa G'),
+('Empresa H'),
+('Empresa I'),
+('Empresa J'),
+('Empresa K'),
+('Empresa L'),
+('Empresa M'),
+('Empresa N'),
+('Empresa O');
+
+-- Insertar datos en la tabla promotion.promotion
+INSERT INTO promotion.promotion (id_item, amount_promotion, discount) VALUES
+(1, 5, 10),
+(2, 8, 15),
+(3, 10, 20),
+(4, 12, 25),
+(5, 7, 30),
+(6, 4, 35),
+(7, 6, 40),
+(8, 9, 45),
+(9, 3, 50),
+(10, 2, 55),
+(11, 1, 60),
+(12, 5, 10),
+(13, 8, 15),
+(14, 10, 20),
+(15, 12, 25);
+
+-- Insertar registros en la tabla buys.buys
+INSERT INTO buys.buys (id_users, id_buys_detail, id_buys_supplier) VALUES
+(1, 1, 1),  -- Usuario 1 compra el item con id 1 a Proveedor A
+(2, 2, 2),  -- Usuario 2 compra el item con id 2 a Proveedor B
+(3, 3, 3),  -- Usuario 3 compra el item con id 3 a Proveedor C
+(4, 4, 4),  -- Usuario 4 compra el item con id 4 a Proveedor D
+(5, 5, 5),  -- Usuario 5 compra el item con id 5 a Proveedor E
+(6, 6, 6),  -- Usuario 6 compra el item con id 6 a Proveedor F
+(7, 7, 7),  -- Usuario 7 compra el item con id 7 a Proveedor G
+(8, 8, 8),  -- Usuario 8 compra el item con id 8 a Proveedor H
+(9, 9, 9),  -- Usuario 9 compra el item con id 9 a Proveedor I
+(10, 10, 10), -- Usuario 10 compra el item con id 10 a Proveedor J
+(11, 11, 11), -- Usuario 11 compra el item con id 11 a Proveedor K
+(12, 12, 12), -- Usuario 12 compra el item con id 12 a Proveedor L
+(13, 13, 13), -- Usuario 13 compra el item con id 13 a Proveedor M
+(14, 14, 14), -- Usuario 14 compra el item con id 14 a Proveedor N
+(15, 15, 15); -- Usuario 15 compra el item con id 15 a Proveedor O
+
+
+-- Insertar datos en la tabla buys.buys_supplier
+INSERT INTO buys.buys_supplier (supplier_name, company_name, email, number_phone) VALUES
+('Proveedor A', 'Compañia A', 'proveedorA@mail.com', '123456789'),
+('Proveedor B', 'Compañia B', 'proveedorB@mail.com', '234567890'),
+('Proveedor C', 'Compañia C', 'proveedorC@mail.com', '345678901'),
+('Proveedor D', 'Compañia D', 'proveedorD@mail.com', '456789012'),
+('Proveedor E', 'Compañia E', 'proveedorE@mail.com', '567890123'),
+('Proveedor F', 'Compañia F', 'proveedorF@mail.com', '678901234'),
+('Proveedor G', 'Compañia G', 'proveedorG@mail.com', '789012345'),
+('Proveedor H', 'Compañia H', 'proveedorH@mail.com', '890123456'),
+('Proveedor I', 'Compañia I', 'proveedorI@mail.com', '901234567'),
+('Proveedor J', 'Compañia J', 'proveedorJ@mail.com', '123123123'),
+('Proveedor K', 'Compañia K', 'proveedorK@mail.com', '234234234'),
+('Proveedor L', 'Compañia L', 'proveedorL@mail.com', '345345345'),
+('Proveedor M', 'Compañia M', 'proveedorM@mail.com', '456456456'),
+('Proveedor N', 'Compañia N', 'proveedorN@mail.com', '567567567'),
+('Proveedor O', 'Compañia O', 'proveedorO@mail.com', '678678678');
+
+-- Insertar datos en la tabla buys.buys_detail
+INSERT INTO buys.buys_detail (id_item, cost_detail, amount_detail) VALUES
+(1, 500, 5),
+(2, 50, 8),
+(3, 100, 10),
+(4, 150, 12),
+(5, 200, 7),
+(6, 300, 4),
+(7, 400, 6),
+(8, 250, 9),
+(9, 50, 3),
+(10, 600, 2),
+(11, 400, 1),
+(12, 500, 5),
+(13, 450, 8),
+(14, 350, 10),
+(15, 600, 12);
+
+-- Insertar datos en la tabla sale.sale 
+INSERT INTO sale.sale (id_users, id_client, id_detail, date_sale, stock) VALUES
+(1, 1, 1, '2025-03-01', 10),
+(2, 2, 2, '2025-03-02', 15),
+(3, 3, 3, '2025-03-03', 20),
+(4, 4, 4, '2025-03-04', 25),
+(5, 5, 5, '2025-03-05', 30),
+(6, 6, 6, '2025-03-06', 10),
+(7, 7, 7, '2025-03-07', 5),
+(8, 8, 8, '2025-03-08', 8),
+(9, 9, 9, '2025-03-09', 12),
+(10, 10, 10, '2025-03-10', 14),
+(11, 11, 11, '2025-03-11', 6),
+(12, 12, 12, '2025-03-12', 9),
+(13, 13, 13, '2025-03-13', 4),
+(14, 14, 14, '2025-03-14', 7),
+(15, 15, 15, '2025-03-15', 11);
+-- Insertar datos en la tabla sale.sale_detail
+INSERT INTO sale.sale_detail (id_item, cost_detail, amount) VALUES
+(1, 1500, 10),
+(2, 30, 20),
+(3, 120, 15),
+(4, 300, 25),
+(5, 50, 5),
+(6, 200, 10),
+(7, 500, 8),
+(8, 80, 12),
+(9, 150, 7),
+(10, 25, 5),
+(11, 200, 4),
+(12, 180, 6),
+(13, 220, 5),
+(14, 400, 3),
+(15, 600, 2);
+
+-- Insertar datos en la tabla sale.sale
+INSERT INTO sale.sale (id_users, id_client, id_detail, stock) VALUES
+(1, 1, 1, 50),
+(2, 2, 2, 30),
+(3, 3, 3, 15),
+(4, 4, 4, 25),
+(5, 5, 5, 20),
+(6, 6, 6, 10),
+(7, 7, 7, 5),
+(8, 8, 8, 8),
+(9, 9, 9, 18),
+(10, 10, 10, 22),
+(11, 11, 11, 17),
+(12, 12, 12, 12),
+(13, 13, 13, 6),
+(14, 14, 14, 9),
+(15, 15, 15, 14);
+
+

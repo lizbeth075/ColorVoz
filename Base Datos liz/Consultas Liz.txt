@@ -1,0 +1,92 @@
+---------------------PREGUNTAS----------------------------------------------
+---1.-¿Que promociones ha tenido un producto x ?----------------------------
+SELECT p.*
+FROM promotion.promotion p
+JOIN store.item i ON p.id_item = i.id
+WHERE i.name_item = 'Laptop';
+
+---2.- mostrar  las ventas realizadas por un usuario x?
+SELECT s.*
+FROM sale.sale s
+JOIN users.users u ON s.id_users = u.id
+WHERE u.name_users = 'Juan Perez';
+
+
+---3.- mostrar la lista de empleados en un cargo x 
+SELECT e.name_employee, e.id, p.name_position
+FROM users.employee e
+LEFT JOIN users.contract c ON e.id = c.id_employee  -- Hacemos el LEFT JOIN con contract, por si no hay contrato
+LEFT JOIN users.position p ON c.id_position = p.id   -- Hacemos el LEFT JOIN con position, por si no tiene posición
+WHERE p.name_position = 'Gerente';  
+
+---4.-mostar una lista de empleados que alla realizado una compra y saber el cargo 
+SELECT e.name_employee, p.name_position
+FROM users.employee e
+JOIN sale.sale sa ON sa.id_users = e.id_users
+JOIN users.contract c ON e.id = c.id_employee
+JOIN users.position p ON c.id_position = p.id;
+
+---5.- saber cuanto queda de un producto x 
+SELECT i.name_item, (SUM(s.amount_store) - SUM(sd.amount)) AS remaining_stock
+FROM store.item i
+JOIN store.store s ON i.id = s.id_item
+LEFT JOIN sale.sale_detail sd ON i.id = sd.id_item
+WHERE i.name_item = 'Memoria USB'
+GROUP BY i.name_item;
+
+---6.- mostrar la lista de proveedores que venden un producto x 
+SELECT bs.supplier_name, i.name_item, bd.cost_detail, bd.amount_detail
+FROM buys.buys_supplier bs
+JOIN buys.buys b ON bs.id = b.id_buys_supplier  -- Relacionamos la compra con el proveedor
+JOIN buys.buys_detail bd ON b.id_buys_detail = bd.id  -- Relacionamos los detalles de compra
+JOIN store.item i ON bd.id_item = i.id  -- Relacionamos con los productos
+WHERE i.name_item = 'Laptop';  
+
+----------------PREGUNTAS AVANSADAS-----------------------------------  
+---1.- saber cuanto hacido el ingreso por ventas realizadas por un mes x 
+SELECT SUM(sd.cost_detail * sd.amount) AS total_income
+FROM sale.sale s
+JOIN sale.sale_detail sd ON s.id_detail = sd.id
+WHERE EXTRACT(MONTH FROM s.date_sale) = 03 
+AND EXTRACT(YEAR FROM s.date_sale) = 2025;
+
+
+---2.-conocer el producto mas vendido 
+SELECT i.name_item, SUM(sd.amount) AS total_sold
+FROM sale.sale_detail sd
+JOIN store.item i ON sd.id_item = i.id
+GROUP BY i.name_item
+ORDER BY total_sold DESC
+LIMIT 1;
+
+---3.- conocer al cliente que más productos ha comprado 
+SELECT c.name_client, SUM(sd.amount) AS total_products
+FROM sale.sale_detail sd
+JOIN sale.sale s ON s.id_detail = sd.id
+JOIN sale.client c ON s.id_client = c.id
+GROUP BY c.name_client
+ORDER BY total_products DESC
+LIMIT 1;
+
+---4.-Conocer al cliente  con el costo más alto de compra 
+SELECT c.name_client, SUM(sd.cost_detail * sd.amount) AS total_spent
+FROM sale.sale_detail sd
+JOIN sale.sale s ON s.id_detail = sd.id
+JOIN sale.client c ON s.id_client = c.id
+GROUP BY c.name_client
+ORDER BY total_spent DESC
+LIMIT 1;
+
+---5.-mostrar la cantidad de clientes que se tiene .
+SELECT COUNT(*) AS total_clients
+FROM sale.client;
+
+
+---6.-mostrar los productos con un stock menor a 10 .
+SELECT i.name_item, (SUM(s.amount_store) - SUM(sd.amount)) AS remaining_stock
+FROM store.item i
+JOIN store.store s ON i.id = s.id_item
+LEFT JOIN sale.sale_detail sd ON i.id = sd.id_item
+GROUP BY i.name_item
+HAVING (SUM(s.amount_store) - SUM(sd.amount)) < 10;
+

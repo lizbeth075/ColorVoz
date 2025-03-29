@@ -1,0 +1,142 @@
+-- Creación de los esquemas
+CREATE SCHEMA users;
+CREATE SCHEMA store;
+CREATE SCHEMA buys;
+CREATE SCHEMA promotion;
+CREATE SCHEMA sale;
+
+-- Tabla de Usuarios: almacena la información de los usuarios del sistema
+CREATE TABLE users.users(
+	id SERIAL PRIMARY KEY,
+	name_users TEXT NOT NULL, -- Nombre de usuario
+	password_users TEXT NOT NULL -- Contraseña del usuario
+);
+
+-- Tabla de Empleados: almacena datos de los empleados
+CREATE TABLE users.employee (
+    id SERIAL PRIMARY KEY,
+    id_users INTEGER NOT NULL REFERENCES users.users(id), -- Relación con la tabla de usuarios
+    name_employee TEXT NOT NULL, -- Nombre del empleado
+    ap_paterno TEXT NULL, -- Apellido paterno
+    ap_materno TEXT NULL -- Apellido materno
+);
+
+-- Tabla de Posiciones (Cargos)
+CREATE TABLE users.position(
+	id SERIAL PRIMARY KEY,
+	name_position TEXT NOT NULL, -- Nombre del cargo
+	description_position TEXT NULL -- Descripción del cargo
+);
+
+-- Tabla de Contratos: relación entre empleados y posiciones
+CREATE TABLE users.contract(
+	id SERIAL PRIMARY KEY,
+	id_employee INTEGER NOT NULL REFERENCES users.employee(id), -- Relación con la tabla de empleados
+	id_position INTEGER NOT NULL REFERENCES users.position(id), -- Relación con la tabla de posiciones
+	date_contract DATE DEFAULT CURRENT_TIMESTAMP, -- Fecha de inicio del contrato
+	type_contract TEXT NOT NULL, -- Tipo de contrato
+	time_contract INTEGER CHECK (time_contract > 0) -- Duración del contrato en meses
+);
+
+-- Tabla de Áreas dentro de la empresa
+CREATE TABLE users.area(
+	id SERIAL PRIMARY KEY,
+	location_area TEXT NOT NULL, -- Ubicación del área
+	description_area TEXT NULL, -- Descripción del área
+	number_area INTEGER NOT NULL CHECK (number_area > 0) -- Número identificador del área
+);
+
+-- Asignación de Áreas a los empleados
+CREATE TABLE users.assing_area(
+	id SERIAL PRIMARY KEY,
+	id_employee INTEGER NOT NULL REFERENCES users.employee(id), -- Relación con empleados
+	id_area INTEGER NOT NULL REFERENCES users.area(id) -- Relación con áreas
+);
+
+-- Control de Acceso: Permisos de los usuarios en el sistema
+CREATE TABLE users.control_access(
+	id SERIAL PRIMARY KEY,
+	id_users INTEGER NOT NULL REFERENCES users.users(id), -- Relación con la tabla de usuarios
+	admin_control_access TEXT NULL,
+	buys_control_access TEXT NULL,
+	sale_control_access TEXT NULL,
+	store_control_access TEXT NULL
+);
+
+-- Tabla de Productos o Ítems en inventario
+CREATE TABLE store.item(
+	id SERIAL PRIMARY KEY,
+	name_item TEXT NOT NULL, -- Nombre del producto
+	description_item TEXT NOT NULL -- Descripción del producto
+);
+
+-- Registro de movimientos de inventario
+CREATE TABLE store.store(
+	id SERIAL PRIMARY KEY,
+	id_users INTEGER NOT NULL REFERENCES users.users(id), -- Usuario que realiza la operación
+	id_item INTEGER NOT NULL REFERENCES store.item(id), -- Producto relacionado
+	date_store DATE DEFAULT CURRENT_TIMESTAMP, -- Fecha del movimiento
+	motion CHAR(1) NOT NULL CHECK (motion IN ('i', 's')), -- Movimiento de entrada ('i') o salida ('s')
+	amount_store INTEGER CHECK (amount_store >= 0), -- Cantidad involucrada en el movimiento
+	final_amount INTEGER NULL -- Cantidad final en inventario
+);
+
+-- Tabla de Clientes
+CREATE TABLE sale.client(
+	id SERIAL PRIMARY KEY,
+	name_client TEXT NOT NULL -- Nombre del cliente
+);
+
+-- Detalles de Venta
+CREATE TABLE sale.sale_detail(
+	id SERIAL PRIMARY KEY,
+	id_item INTEGER NOT NULL REFERENCES store.item(id), -- Producto vendido
+	cost_detail INTEGER NOT NULL CHECK (cost_detail >= 0), -- Precio unitario
+	amount INTEGER CHECK (amount >= 0) -- Cantidad vendida
+);
+
+-- Tabla de Ventas
+CREATE TABLE sale.sale(
+	id SERIAL PRIMARY KEY,
+	id_users INTEGER NOT NULL REFERENCES users.users(id), -- Usuario que realiza la venta
+	id_client INTEGER NOT NULL REFERENCES sale.client(id), -- Cliente que compra
+	id_detail INTEGER NOT NULL REFERENCES sale.sale_detail(id), -- Detalle de la venta
+	date_sale DATE DEFAULT CURRENT_TIMESTAMP, -- Fecha de la venta
+	stock INTEGER CHECK (stock >= 0) -- Stock después de la venta
+);
+
+-- Tabla de Proveedores
+CREATE TABLE buys.buys_supplier(
+	id SERIAL PRIMARY KEY,
+	supplier_name TEXT NOT NULL, -- Nombre del proveedor
+	company_name TEXT NOT NULL, -- Nombre de la empresa
+	email TEXT NOT NULL, -- Correo electrónico
+	number_phone TEXT NOT NULL -- Teléfono de contacto
+);
+
+-- Detalles de Compra
+CREATE TABLE buys.buys_detail(
+	id SERIAL PRIMARY KEY,
+	id_item INTEGER NOT NULL REFERENCES store.item(id), -- Producto comprado
+	cost_detail INTEGER NOT NULL CHECK (cost_detail >= 0), -- Costo unitario
+	amount_detail INTEGER CHECK (amount_detail >= 0) -- Cantidad comprada
+);
+
+-- Tabla de Compras
+CREATE TABLE buys.buys(
+	id SERIAL PRIMARY KEY,
+	id_users INTEGER NOT NULL REFERENCES users.users(id), -- Usuario que realiza la compra
+	id_buys_detail INTEGER NOT NULL REFERENCES buys.buys_detail(id), -- Detalle de la compra
+	id_buys_supplier INTEGER NOT NULL REFERENCES buys.buys_supplier(id), -- Proveedor relacionado
+	date_buys DATE DEFAULT CURRENT_TIMESTAMP -- Fecha de la compra
+);
+
+-- Tabla de Promociones
+CREATE TABLE promotion.promotion(
+	id SERIAL PRIMARY KEY,
+	id_item INTEGER NOT NULL REFERENCES store.item(id), -- Producto en promoción
+	date_promotion DATE DEFAULT CURRENT_TIMESTAMP, -- Fecha de la promoción
+	amount_promotion INTEGER CHECK (amount_promotion >= 0), -- Cantidad de productos en promoción
+	discount INTEGER CHECK (discount >= 0) -- Descuento aplicado
+);
+/////////////////////////////////////////////////////////
